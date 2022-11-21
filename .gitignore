@@ -14,11 +14,11 @@
 ######################################
 
 # Ignore variable data
-/.env
+#/.env
 /backups/*
 
 # Ignore Data dirs
-/data/www/*
+/data/*
 
 # Ignore Certificate Authority
 /ca/*
