@@ -1,5 +1,5 @@
 # Devilbox
 alias wp_start='mv .env .env-example && mv .env-wp .env && docker-compose up -d httpd php mysql && echo "wp server started"'
 alias wp_stop='docker-compose stop && mv .env .env-wp && mv .env-example .env && echo "wp server stopped"'
-alias wp_start='mv .env .env-example && mv .env-jo .env && docker-compose up -d httpd php mysql && echo "jo server started"'
-alias wp_stop='docker-compose stop && mv .env .env-jo && mv .env-example .env && echo "jo server stopped"'
+alias jo_start='mv .env .env-example && mv .env-jo .env && docker-compose up -d httpd php mysql && echo "jo server started"'
+alias jo_stop='docker-compose stop && mv .env .env-jo && mv .env-example .env && echo "jo server stopped"'
