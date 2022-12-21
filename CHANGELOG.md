@@ -6,6 +6,80 @@ Make sure to have a look at [UPDATING.md](https://github.com/cytopia/devilbox/bl
 ## Unreleased
 
 
+## Release v2.4.0 (2022-12-18)
+
+This release might be a bit bumpy due to a massive amount of changes in upstream projects. If you encounter issues, please do raise tickets.
+
+### General
+
+#### New PHP-FPM images
+This release uses a new set of PHP-FPM images. They have been heavily rewritten and modularized in order to make PHP extension and PHP tool generation more easy. See the following release notes for details:
+
+> 499 changed files with 29,281 additions and 13,977 deletions.
+
+* https://github.com/devilbox/docker-php-fpm/releases/tag/0.145
+* https://github.com/devilbox/docker-php-fpm/releases/tag/0.146
+* https://github.com/devilbox/docker-php-fpm/releases/tag/0.147
+
+#### How to add modules/tools?
+* **[How to build PHP modules](https://github.com/devilbox/docker-php-fpm/blob/master/php_modules/README.md)**
+* **[How to install tools in PHP images](https://github.com/devilbox/docker-php-fpm/blob/master/php_tools/README.md)**
+
+#### Available Tools
+You can now also find a detailed overview about what tools are installed in what PHP version image. See here: https://github.com/devilbox/docker-php-fpm/blob/master/doc/available-tools.md
+
+#### Gitter -> Discord
+Additionally I am moving away from Gitter to **Discord**. See reason and announcement here: https://devilbox.discourse.group/t/migrating-from-gitter-to-discord/716/2
+
+**🎮 Discord:** https://discord.gg/2wP3V6kBj4
+
+### Fixed
+- Intranet: Fixed PostgreSQL database overview
+- Fixed PATH for all pre-installed composer and node tools
+
+### Changed
+- Updated PHP versions (https://github.com/cytopia/devilbox/issues/940)
+- Updated MySQL versions
+- Intranet: Improved installed tools overview (index.php)
+- Intranet: Delayed message loading (https://github.com/cytopia/devilbox/pull/904)
+
+### Added
+- Added tool `mhsendmail` for arm64 images
+- Added tool `wkhtmltopdf` for arm64 images (https://github.com/cytopia/devilbox/issues/936)
+- Added tool `taskfile` (https://github.com/cytopia/devilbox/issues/934)
+
+### Removed
+- Removed tool `drush` (detail: https://github.com/cytopia/devilbox/issues/930#issuecomment-1344764908)
+
+
+## Release v2.3.0 (2022-12-04)
+
+### Fixed
+- Fixed correct permission for `/opt/nvm` in PHP container [#499](https://github.com/cytopia/devilbox/issues/499), [#PHP-FPM 0.141](https://github.com/devilbox/docker-php-fpm/releases/tag/0.141)
+- Fixed Debian Jessie repository trust beyond EOL [#PHP-FPM 0.140](https://github.com/devilbox/docker-php-fpm/releases/tag/0.140)
+- Fixed phpPgAdmin to work with PostgreSQL 15
+
+### Added
+- Added env var to Bind to specify overall memory consumption via `MAX_CACHE_SIZE` [#BIND 0.30](https://github.com/cytopia/docker-bind/releases/tag/0.30)
+- Added PHP extension: `lz4` [#PHP-FPM 0.144](https://github.com/devilbox/docker-php-fpm/releases/tag/0.144)
+- Added PHP extension: `lzf` [#PHP-FPM 0.144](https://github.com/devilbox/docker-php-fpm/releases/tag/0.144)
+- Added PHP extension: `zstd` [#PHP-FPM 0.144](https://github.com/devilbox/docker-php-fpm/releases/tag/0.144)
+- Added serializer to Redis extension: `lz4`, `lzf` and` zstd` [#PHP-FPM 0.144](https://github.com/devilbox/docker-php-fpm/releases/tag/0.144)
+- Added MariaDB 10.9 and 10.11 [#MYSQL 0.19](https://github.com/devilbox/docker-mysql/pull/24)
+- Added PGSQL 15
+- Added Redis 7.0
+
+### Changed
+- Switched to `phalcon` 5.x extension for PHP 8.0 and PHP 8.1 [#913](https://github.com/cytopia/devilbox/issues/913), [#PHP-FPM 0.143](https://github.com/devilbox/docker-php-fpm/releases/tag/0.143)
+- Updated to latest minor versions of Apache 2.2, Apache 2.4, Nginx stable and Nginx mainline
+- Updated to latest minor versions of PHP [#917](https://github.com/cytopia/devilbox/issues/917)
+- Updated to latest minor versions of MySQL, MariaDB and Percona DB
+- Updated PHP extensions to lastest versions [#899](https://github.com/cytopia/devilbox/issues/899)
+
+### Removed
+- Removed Phalcon DevTools for PHP 7.4 due to build error [#PHP-FPM 0.142](https://github.com/devilbox/docker-php-fpm/releases/tag/0.142)
+
+
 ## Release v2.2.0 (2022-04-14)
 
 This release adds PHP-FPM community images via `docker-compose.override.yml`, which easily allows you
