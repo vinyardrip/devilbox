@@ -1,5 +1,5 @@
 # Devilbox
 alias 7_start='cd ~/projects/work/devilbox && mv .env .env-example && mv .env-7 .env && docker-compose up -d httpd php mysql mailhog && echo "server 7 start"'
-alias 7_stop='docker-compose stop && mv .env .env-7 && mv .env-example .env && echo "server 7 finish"'
+alias 7_finish='docker-compose stop && mv .env .env-7 && mv .env-example .env && echo "server 7 finish"'
 alias 6_start='cd ~/projects/work/devilbox && mv .env .env-example && mv .env-6 .env && docker-compose up -d httpd php mysql mailhog && echo "server 6 start"'
-alias 6_stop='docker-compose stop && mv .env .env-6 && mv .env-example .env && echo "server 6 finish"'
+alias 6_finish='docker-compose stop && mv .env .env-6 && mv .env-example .env && echo "server 6 finish"'
