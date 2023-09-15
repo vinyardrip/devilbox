@@ -1,7 +1,72 @@
 # Devilbox
-alias 8_start='cd ~/projects/work/devilbox && mv .env .env-example && mv .env-8 .env && docker-compose up -d httpd php mysql mailhog && echo "server 8 start"'
-alias 8_finish='docker-compose stop && mv .env .env-8 && mv .env-example .env && echo "server 8 finish"'
-alias 7_start='cd ~/projects/work/devilbox && mv .env .env-example && mv .env-7 .env && docker-compose up -d httpd php mysql mailhog && echo "server 7 start"'
-alias 7_finish='docker-compose stop && mv .env .env-7 && mv .env-example .env && echo "server 7 finish"'
-alias 6_start='cd ~/projects/work/devilbox && mv .env .env-example && mv .env-6 .env && docker-compose up -d httpd php mysql mailhog && echo "server 6 start"'
-alias 6_finish='docker-compose stop && mv .env .env-6 && mv .env-example .env && echo "server 6 finish"'
+# Path to devilbox
+devilbox_path=~/projects/work/devilbox
+# Service alias docker php container start
+alias php_container='docker-compose up -d httpd php mysql mailhog'
+
+start_devilbox() {
+    cd $devilbox_path;
+    if [ -f env ] ; then
+        echo " Сервер php запущен \n Остановить сервер командой \n finish_devilbox";
+    elif [[ $1 < 0 ]] ; then
+        echo " Задайте версию php сервера: \n start_devilbox 6 \n start_devilbox 7 \n start_devilbox 8";
+    elif ! [ -f .env-$1 ] ; then
+        echo " Неверная версия php сервера";
+    elif ! [ -f env ] ; then
+        mv .env env && mv .env-$1 .env && php_container && echo " server php-$1 start";
+    else
+        echo " Неизвестная ошибка";
+    fi
+}
+
+finish_devilbox() {
+    if ! [ -f env ] ; then
+        echo " Нет запущенных php серверов";
+    elif [[ $1 < 0 ]] ; then
+        echo " Выберите версию php сервера для останова: \n finish_devilbox 6 \n finish_devilbox 7 \n finish_devilbox 8";
+    elif [ -f .env-$1 ] ; then
+        echo " Неверная версия php сервера";
+    elif [[ -f env && -f .env && ! -f .env-$1 && $1 -gt 5 && $1 -lt 9 ]] ; then
+        docker-compose stop && mv .env .env-$1 && mv env .env && echo " server php-$1 finish";
+    else
+        echo " Версия php сервера может быть: \n 6, \n 7, \n 8";
+    fi
+}
+
+# Browser-sync
+sync_site() {
+    cd $devilbox_path/data;
+    browser-sync start -p https://'wp-'$1.loc -f "**/*.php";
+}
+
+# Wp start
+wp_start() {
+    cd $devilbox_path/data;
+    mkdir 'wp-'$1 && cd 'wp-'$1;
+    curl -O https://wordpress.org/latest.zip;
+    unzip latest.zip;
+    mv wordpress htdocs;
+    rm latest.zip;
+    cp -r ~/projects/work/_s-template $devilbox_path/data/'wp-'$1/htdocs;
+    sudo nano /etc/hosts;
+    start_devilbox 7;
+    sleep 5;
+    google-chrome-stable http://localhost:80/vhosts.php;
+    code $devilbox_path/data/'wp-'$1/htdocs;
+}
+
+# Wp latest
+wp_latest() {
+    cd $devilbox_path/data/data;
+    mkdir 'wp-'$1 && cd 'wp-'$1;
+    curl -O https://wordpress.org/latest.zip;
+    unzip latest.zip;
+    mv wordpress htdocs;
+    rm latest.zip;
+    cp -r ~/projects/work/_s-template $devilbox_path/data/data/'wp-'$1/htdocs;
+    sudo nano /etc/hosts;
+    start_devilbox 8;
+    sleep 5;
+    google-chrome-stable http://localhost:80/vhosts.php;
+    code $devilbox_path/data/data/'wp-'$1/htdocs;
+}
