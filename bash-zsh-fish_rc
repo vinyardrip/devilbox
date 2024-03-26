@@ -1,6 +1,8 @@
 # Devilbox
-# Path to devilbox
-devilbox_path=~/projects/work/devilbox
+# Path to work directory
+project_path=~/projects/work
+# Path to devilbox directory
+devilbox_path=$project_path/devilbox
 # Service alias docker php container start
 alias php_container='docker-compose up -d httpd php mysql mailhog'
 
@@ -39,36 +41,19 @@ sync_site() {
     browser-sync start -p https://'wp-'$1.loc -f "**/*.php";
 }
 
-# Wp start
+# Wp start php-8
 wp_start() {
-    cd $devilbox_path/data;
-    mkdir 'wp-'$1 && cd 'wp-'$1;
+    cd $devilbox_path/data
     curl -O https://wordpress.org/latest.zip;
     unzip latest.zip;
-    mv wordpress htdocs;
-    rm latest.zip;
-    cp -r ~/projects/work/_s-template $devilbox_path/data/'wp-'$1/htdocs;
-    sudo nano /etc/hosts;
-    start_devilbox 7;
-    sleep 5;
-    google-chrome-stable http://localhost:80/vhosts.php;
-    code $devilbox_path/data/'wp-'$1/htdocs;
-}
-
-# Wp latest
-wp_latest() {
-    cd $devilbox_path/data/data;
-    mkdir 'wp-'$1 && cd 'wp-'$1;
-    curl -O https://wordpress.org/latest.zip;
-    unzip latest.zip;
-    mv wordpress htdocs;
-    rm latest.zip;
-    cp -r ~/projects/work/_s-template $devilbox_path/data/data/'wp-'$1/htdocs;
+    mv wordpress 'wp-'$1;
+    rm -f latest.zip;
+    cp -r $project_path/_s-template $devilbox_path/data/'wp-'$1;
     sudo nano /etc/hosts;
     start_devilbox 8;
     sleep 5;
     google-chrome-stable http://localhost:80/vhosts.php;
-    code $devilbox_path/data/data/'wp-'$1/htdocs;
+    code $devilbox_path/data/'wp-'$1;
 }
 
 # -a == &&
